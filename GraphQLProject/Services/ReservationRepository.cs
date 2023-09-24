@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using GraphQLProject.Data;
+using GraphQLProject.Interfaces;
+using GraphQLProject.Models;
+
+namespace GraphQLProject.Services
+{
+    public class ReservationRepository : IReservationRepository
+    {
+        private GraphQLDbContext dbContext;
+
+        public ReservationRepository(GraphQLDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
+        public Reservation AddReservation(Reservation reservation)
+        {
+            dbContext.Reservations.Add(reservation);
+            dbContext.SaveChanges();
+            return reservation;
+        }
+
+        public List<Reservation> GetReservations()
+        {
+            return dbContext.Reservations.ToList();
+        }
+    }
+}
